@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maui Hostels - Paradise Stays in Maui & Playa del Carmen</title>
+    <!-- Tailwind CDN for development - Replace with your compiled version for production -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icons CDN -->
+    <script src="https://kit.fontawesome.com/91879b8b78.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Simplified analog color scheme
+                        primary: '#2A4B5E',    // Deep teal/navy from logo
+                        accent: '#4A7A96',     // Lighter blue accent
+                        sand: '#F2EFE9',       // Light sand/off-white
+                        dark: '#1A2E3A',       // Darker shade of primary
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Custom styles that can't be handled by Tailwind -->
+    <style>
+        @font-face {
+            font-family: 'Tan Nimbus';
+            src: url('assets/fonts/TAN-NIMBUS.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* This helps with font loading behavior */
+        }
+        
+        /* Create a utility class to apply the font */
+        .font-tan-nimbus {
+            font-family: 'Tan Nimbus', serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Tan Nimbus', serif;
+        }
+        /* Video container for full-width hero */
+        .video-container {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+        }
+        /* Video container for full-width hero */
+        .video-container {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        
+        /* Text shadow for better readability on variable backgrounds */
+        .text-shadow {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Add some spacing to account for the fixed header */
+        body {
+            padding-top: 0; /* Will be adjusted by JavaScript on load */
+        }
+        
+        /* For smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-sand">
+    <!-- Header/Navigation -->
+    <header class="bg-primary text-white shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <!-- Language Toggle -->
+            <div class="flex justify-end mb-2">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" id="lang-en" class="bg-accent px-4 py-1 text-sm font-medium text-white rounded-l-lg focus:z-10 focus:outline-none">
+                        EN
+                    </button>
+                    <button type="button" id="lang-es" class="bg-dark hover:bg-accent px-4 py-1 text-sm font-medium text-white rounded-r-lg focus:z-10 focus:outline-none transition duration-300">
+                        ES
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-14 brightness-0 invert">
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:block"> <!-- Hidden on mobile, visible on medium screens and up -->
+                    <!-- Navigation Menu - Using data-translate approach -->
+                    <ul id="desktop-nav" class="flex space-x-8">
+                        <li><a href="index.html" class="font-semibold border-b-2 border-accent" data-translate="nav" data-key="home">Home</a></li>
+                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Actividades</a></li>
+                        <li><a href="gallery.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Gallery</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
+                <!-- Mobile menu using data-translate approach -->
+                <ul id="mobile-nav" class="flex flex-col space-y-3">
+                    <li><a href="index.html" class="block font-semibold text-accent" data-translate="nav" data-key="home">Home</a></li>
+                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tours">Tours</a></li>
+                    <li><a href="blog.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="blog">Blog</a></li>
+                    <li><a href="gallery.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Gallery</a></li>
+                    <li><a href="contact.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Video Section -->
+    <section class="video-container relative">
+        <!-- Video placeholder - Replace 'video-placeholder.jpg' with your actual video -->
+        <video id="hero-video" autoplay muted loop poster="images/general/video-placeholder.jpg">
+            <source src="videos/hero-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- Video Controls -->
+        <div class="absolute bottom-5 right-5 z-30 flex space-x-3">
+            <button id="toggle-overlay-btn" class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition duration-300" title="Toggle Overlay">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+            </button>
+            <button id="play-pause-btn" class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition duration-300" title="Play/Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </button>
+            <button id="volume-btn" class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition duration-300" title="Toggle Sound">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Overlay with text -->
+        <div id="video-overlay" class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+            <div class="text-center px-4">
+                <h1 data-translate="hero" data-key="headline" class="text-4xl md:text-6xl font-bold text-white text-shadow mb-4">Experience Paradise</h1>
+                <p data-translate="hero" data-key="subheadline" class="text-xl md:text-2xl text-white text-shadow mb-8">Two stunning locations, one unforgettable experience.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#tulum" data-translate="hero" data-key="exploreMaui" class="bg-primary hover:bg-accent text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg">Explore Tulum</a>
+                    <a href="#playa" data-translate="hero" data-key="discoverPlaya" class="bg-accent hover:bg-primary text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg">Discover Playa del Carmen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="py-20 bg-gradient-to-r from-white via-sand/20 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto relative">
+                <!-- Decorative element above title -->
+                <div class="flex justify-center mb-6">
+                    <div class="w-16 h-1 bg-accent rounded-full"></div>
+                </div>
+                
+                <h2 data-translate="intro" data-key="welcome" class="text-3xl font-bold text-primary mb-6">Welcome to Maui Hostels</h2>
+                
+                <p data-translate="intro" data-key="description" class="text-lg text-gray-700 mb-8">Experience the perfect blend of adventure, comfort, and community at our carefully crafted hostel locations. Whether you're seeking the mystical ruins of Tulum or the vibrant culture of Playa del Carmen, our hostels offer the ideal base for your explorations.</p>
+                
+                <i class="fa-solid fa-umbrella-beach text-4xl text-accent"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="py-16 relative bg-gradient-to-br from-sand via-white to-sand" id="destinations">            
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 data-translate="destinations" data-key="title" class="text-3xl font-bold text-primary text-center mb-4">Our Destinations</h2>
+            
+            <!-- Decorative header element -->
+            <div class="flex justify-center items-center mb-12">
+                <div class="h-1 w-12 bg-accent rounded-full"></div>
+                <div class="mx-4">
+                    <i class="fa-solid fa-earth-americas text-4xl text-accent"></i>
+                </div>
+                <div class="h-1 w-12 bg-accent rounded-full"></div>
+            </div>
+            
+            <!-- Tulum Section -->
+            <div id="tulum" class="mb-20 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6">
+                <div class="flex flex-col md:flex-row items-center">
+                    <!-- Image (left on desktop, top on mobile) -->
+                    <div class="w-full md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <div class="carousel-container relative rounded-lg shadow-xl overflow-hidden h-[500px]" style="max-height: 500px;">
+                            <!-- Carousel content unchanged -->
+                            <div id="tulum-carousel" class="carousel-slides flex h-full transition-transform duration-300">
+                                <div class="carousel-slide w-full h-full flex-shrink-0">
+                                    <img src="images/tulum/tulum-hostel-1.jpeg" alt="Tulum Hostel - Main View" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/tulum/tulum-hostel-2.jpeg" alt="Tulum Hostel - Beach Area" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/tulum/tulum-hostel-3.jpg" alt="Tulum Hostel - Rooms" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/tulum/tulum-hostel-4.jpg" alt="Tulum Hostel - Common Area" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/tulum/tulum-hostel-5.jpg" alt="Tulum Hostel - Surroundings" class="w-full h-full object-cover object-center">
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Controls with better icons -->
+                            <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-accent text-white p-3 rounded-full transition duration-300 focus:outline-none shadow-md hover:shadow-lg hover:bg-primary" aria-label="Previous Image">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-accent text-white p-3 rounded-full transition duration-300 focus:outline-none shadow-md hover:shadow-lg hover:bg-primary" aria-label="Next Image">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                            
+                            <!-- Carousel Indicators -->
+                            <div class="carousel-indicators absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator active" data-index="0" aria-label="Image 1"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="1" aria-label="Image 2"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="2" aria-label="Image 3"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="3" aria-label="Image 4"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="4" aria-label="Image 5"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content (right on desktop, bottom on mobile) -->
+                    <div class="w-full md:w-1/2">
+                        <h3 data-translate="destinations" data-key="mauiTitle" class="text-2xl font-bold text-primary mb-4">Tulum, Mexico</h3>
+                        <p data-translate="destinations" data-key="mauiDesc" class="text-gray-700 mb-6">Nestled between lush jungle and pristine white sand beaches, our Tulum location offers the perfect blend of natural beauty and ancient history. Wake up to ocean views, spend your days exploring Mayan ruins, cenotes, or simply relaxing on the beach, and end each day watching the sunset with new friends.</p>
+                        
+                        <!-- Features with better icons -->
+                        <ul class="mb-8 space-y-4">
+                            <li class="flex items-center">
+                                <div class="bg-accent w-10 h-10 flex items-center justify-center rounded-full text-white mr-3">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <span data-translate="destinations" data-key="mauiFeature1">Beachfront location</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="bg-accent w-10 h-10 flex items-center justify-center rounded-full text-white mr-3">
+                                    <i class="fa-solid fa-bicycle"></i>
+                                </div>
+                                <span data-translate="destinations" data-key="mauiFeature2">Bicycle rentals and eco-tours</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="bg-accent w-10 h-10 flex items-center justify-center rounded-full text-white mr-3">
+                                    <i class="fa-solid fa-binoculars"></i>
+                                </div>
+                                <span data-translate="destinations" data-key="mauiFeature3">Daily excursions to cenotes and ruins</span>
+                            </li>
+                        </ul>
+                        
+                        <!-- Button with icon -->
+                        <a href="#" data-translate="destinations" data-key="mauiButton" class="inline-flex items-center bg-primary hover:bg-accent text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <span>Explore Tulum Location</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Playa del Carmen Section (Reverse layout) -->
+            <div id="playa" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6">
+                <div class="flex flex-col md:flex-row-reverse items-center">
+                    <!-- Image (right on desktop, top on mobile) -->
+                    <div class="w-full md:w-1/2 mb-8 md:mb-0 md:pl-8">
+                        <div class="carousel-container relative rounded-lg shadow-xl overflow-hidden h-[500px]" style="max-height: 500px;">
+                            <!-- Carousel content unchanged -->
+                            <div id="playa-carousel" class="carousel-slides flex h-full transition-transform duration-300">
+                                <div class="carousel-slide w-full h-full flex-shrink-0">
+                                    <img src="images/playa/playa-hostel-1.jpg" alt="Playa del Carmen Hostel - Main View" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/playa/playa-hostel-2.jpg" alt="Playa del Carmen Hostel - Beach Area" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/playa/playa-hostel-3.jpg" alt="Playa del Carmen Hostel - Rooms" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/playa/playa-hostel-4.jpg" alt="Playa del Carmen Hostel - Common Area" class="w-full h-full object-cover object-center">
+                                </div>
+                                <div class="carousel-slide w-full flex-shrink-0">
+                                    <img src="images/playa/playa-hostel-5.jpg" alt="Playa del Carmen Hostel - Surroundings" class="w-full h-full object-cover object-center">
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Controls with better icons -->
+                            <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-accent text-white p-3 rounded-full transition duration-300 focus:outline-none shadow-md hover:shadow-lg hover:bg-primary" aria-label="Previous Image">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-accent text-white p-3 rounded-full transition duration-300 focus:outline-none shadow-md hover:shadow-lg hover:bg-primary" aria-label="Next Image">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                            
+                            <!-- Carousel Indicators -->
+                            <div class="carousel-indicators absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator active" data-index="0" aria-label="Image 1"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="1" aria-label="Image 2"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="2" aria-label="Image 3"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="3" aria-label="Image 4"></button>
+                                <button class="w-2 h-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition duration-300 carousel-indicator" data-index="4" aria-label="Image 5"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content (left on desktop, bottom on mobile) -->
+                    <div class="w-full md:w-1/2">
+                        <h3 data-translate="destinations" data-key="playaTitle" class="text-2xl font-bold text-primary mb-4">Playa del Carmen, Mexico</h3>
+                        <p data-translate="destinations" data-key="playaDesc" class="text-gray-700 mb-6">Immerse yourself in the vibrant colors and rich culture of the Yucatán Peninsula at our Playa del Carmen location. Just a short walk from the famous Fifth Avenue, our hostel combines Mexican charm with modern amenities. Explore ancient ruins, swim in crystal-clear cenotes, or dance the night away.</p>
+                        
+                        <!-- Features with better icons -->
+                        <ul class="mb-8 space-y-4">
+                            <li class="flex items-center">
+                                <div class="bg-accent w-10 h-10 flex items-center justify-center rounded-full text-white mr-3">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <span data-translate="destinations" data-key="playaFeature1">Central location near Fifth Avenue</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="bg-accent w-10 h-10 flex items-center justify-center rounded-full text-white mr-3">
+                                    <i class="fa-solid fa-turn-up"></i>
+                                </div>
+                                <span data-translate="destinations" data-key="playaFeature2">Cenote and ruins tours</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="bg-accent w-10 h-10 flex items-center justify-center rounded-full text-white mr-3">
+                                    <i class="fa-solid fa-martini-glass-citrus"></i>
+                                </div>
+                                <span data-translate="destinations" data-key="playaFeature3">Rooftop bar with ocean views</span>
+                            </li>
+                        </ul>
+                        
+                        <!-- Button with icon -->
+                        <a href="#" data-translate="destinations" data-key="playaButton" class="inline-flex items-center bg-primary hover:bg-accent text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <span>Explore Playa Location</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Testimonials Section - Google Reviews -->
+     <section class="py-16 bg-gradient-to-b from-sand to-white">
+        <div class="container mx-auto px-4">
+            <!-- Decorative element -->
+            <div class="flex justify-center mb-4">
+                <div class="w-20 h-1 bg-accent rounded-full"></div>
+            </div>
+            
+            <h2 data-translate="testimonials" data-key="title" class="text-3xl font-bold font-tan-nimbus text-center mb-4 text-primary">What Our Guests Say</h2>
+            <p data-translate="testimonials" data-key="subtitle" class="text-center mb-12 text-primary text-opacity-70 max-w-2xl mx-auto">Authentic reviews from our Google Business profiles</p>
+            
+            <!-- Tabs for switching between locations -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" id="tulum-reviews-tab" data-translate="testimonials" data-key="tulumTab" class="bg-accent px-6 py-2 text-sm font-medium text-white rounded-l-lg focus:z-10 focus:outline-none">
+                        Tulum Reviews
+                    </button>
+                    <button type="button" id="playa-reviews-tab" data-translate="testimonials" data-key="playaTab" class="bg-dark hover:bg-accent px-6 py-2 text-sm font-medium text-white rounded-r-lg focus:z-10 focus:outline-none transition duration-300">
+                        Playa del Carmen Reviews
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Tulum Reviews -->
+            <div id="tulum-reviews" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 (Fallback if JS fails) -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-accent">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full h-12 w-12 overflow-hidden bg-accent mr-4">
+                            <div class="flex items-center justify-center h-full text-white font-bold">
+                                AG
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-primary">Abigail G.</div>
+                            <!-- Stars -->
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-gray-700" data-translate="testimonials" data-key="test1">"The beach club is just phenomenal, service is impeccable. The best location in Tulum. A must visit whether you stay there or not!"</p>
+                    <div class="text-sm text-gray-500">a year ago via Google</div>
+                    <p class="text-sm text-gray-600 mt-2" data-translate="testimonials" data-key="author1">Sarah J. - Australia</p>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-accent">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full h-12 w-12 overflow-hidden bg-accent mr-4">
+                            <div class="flex items-center justify-center h-full text-white font-bold">
+                                LM
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-primary">Lucas M.</div>
+                            <!-- Stars -->
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-gray-700" data-translate="testimonials" data-key="test2">"The cenote tour from the Playa location was the highlight of my trip! The hostel's community atmosphere made it easy to find adventure buddies and make lasting memories."</p>
+                    <div class="text-sm text-gray-500">2 years ago via Google</div>
+                    <p class="text-sm text-gray-600 mt-2" data-translate="testimonials" data-key="author2">Miguel R. - Spain</p>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-accent">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full h-12 w-12 overflow-hidden bg-accent mr-4">
+                            <div class="flex items-center justify-center h-full text-white font-bold">
+                                MS
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-primary">Maria S.</div>
+                            <!-- Stars -->
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-gray-700" data-translate="testimonials" data-key="test3">"I stayed at both locations and can't decide which I loved more! The staff made me feel like family, and both hostels have the perfect balance of relaxation and adventure."</p>
+                    <div class="text-sm text-gray-500">8 months ago via Google</div>
+                    <p class="text-sm text-gray-600 mt-2" data-translate="testimonials" data-key="author3">Alex T. - Canada</p>
+                </div>
+            </div>
+            
+            <!-- Playa del Carmen Reviews (initially hidden) -->
+            <div id="playa-reviews" class="grid grid-cols-1 md:grid-cols-3 gap-8 hidden">
+                <!-- Review 1 (Fallback if JS fails) -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-accent">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full h-12 w-12 overflow-hidden bg-accent mr-4">
+                            <div class="flex items-center justify-center h-full text-white font-bold">
+                                EW
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-primary">Emma W.</div>
+                            <!-- Stars -->
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-gray-700" data-translate="testimonials" data-key="test1">"Great location, right near 5th Avenue! The rooftop bar has amazing views of the ocean and perfect for sunset drinks."</p>
+                    <div class="text-sm text-gray-500">3 months ago via Google</div>
+                    <p class="text-sm text-gray-600 mt-2" data-translate="testimonials" data-key="author1">Sarah J. - Australia</p>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-accent">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full h-12 w-12 overflow-hidden bg-accent mr-4">
+                            <div class="flex items-center justify-center h-full text-white font-bold">
+                                DC
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-primary">David C.</div>
+                            <!-- Stars -->
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-gray-700" data-translate="testimonials" data-key="test2">"The staff were incredibly friendly and helpful with arranging tours to cenotes. The hostel has a great social atmosphere."</p>
+                    <div class="text-sm text-gray-500">6 months ago via Google</div>
+                    <p class="text-sm text-gray-600 mt-2" data-translate="testimonials" data-key="author2">Miguel R. - Spain</p>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-accent">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full h-12 w-12 overflow-hidden bg-accent mr-4">
+                            <div class="flex items-center justify-center h-full text-white font-bold">
+                                SR
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-primary">Sofia R.</div>
+                            <!-- Stars -->
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-gray-700" data-translate="testimonials" data-key="test3">"Perfect location and the rooftop pool is amazing! Met so many great people and the tours they offer are reasonably priced."</p>
+                    <div class="text-sm text-gray-500">4 months ago via Google</div>
+                    <p class="text-sm text-gray-600 mt-2" data-translate="testimonials" data-key="author3">Alex T. - Canada</p>
+                </div>
+            </div>
+                        
+            <!-- View More Reviews Link -->
+            <div class="text-center mt-10">
+                <a href="https://maps.app.goo.gl/sokcmRksHbzg51qm7" id="view-more-tulum" target="_blank" rel="noopener noreferrer" data-translate="testimonials" data-key="viewMoreTulum" class="inline-flex items-center px-5 py-2 bg-accent text-white rounded-full hover:bg-primary transition duration-300">
+                    View more reviews on Google
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="https://maps.app.goo.gl/KzM4GrhnB2PxAYzQ7" id="view-more-playa" target="_blank" rel="noopener noreferrer" data-translate="testimonials" data-key="viewMorePlaya" class="inline-flex items-center px-5 py-2 bg-accent text-white rounded-full hover:bg-primary transition duration-300 hidden">
+                    View more reviews on Google
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-accent relative" style="background-image: url('images/general/cta-bg.jpg'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black opacity-80"></div> <!-- Overlay -->
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 data-translate="cta" data-key="title" class="text-3xl font-bold text-white mb-6">Ready for Your Next Adventure?</h2>
+            <p data-translate="cta" data-key="description" class="text-white text-lg mb-8 max-w-2xl mx-auto">Book your stay at one of our paradise locations and discover why travelers from around the world choose Maui Hostels.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#" data-translate="cta" data-key="bookMaui" class="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-dark hover:text-white transition duration-300">Book Maui</a>
+                <a href="#" data-translate="cta" data-key="bookPlaya" class="bg-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-primary transition duration-300">Book Playa del Carmen</a>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo and brief description -->
+                <div class="md:col-span-1">
+                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-12 mb-4 brightness-0 invert">
+                    <p data-translate="footer" data-key="description" class="text-sm text-gray-300">Experience paradise at our hostels in Maui and Playa del Carmen.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 data-translate="footer" data-key="quickLinks" class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" data-translate="nav" data-key="home" class="text-gray-300 hover:text-accent transition duration-300">Home</a></li>
+                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities</a></li>
+                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Gallery</a></li>
+                        <li><a href="contact.html" data-translate="nav" data-key="contact" class="text-gray-300 hover:text-accent transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Locations -->
+                <div>
+                    <h3 data-translate="footer" data-key="locations" class="text-lg font-semibold mb-4">Our Locations</h3>
+                    <div>
+                        <h4 class="font-medium">Tulum</h4>
+                        <address class="text-gray-300 not-italic">123 Beach Road<br>Tulum<br>Quintana Roo, Mexico</address>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">Playa del Carmen</h4>
+                        <address class="text-gray-300 not-italic">456 Quinta Avenida<br>Playa del Carmen<br>Quintana Roo, Mexico</address>
+                    </div>
+                </div>
+                
+                <!-- Newsletter sign-up -->
+                <div>
+                    <h3 data-translate="footer" data-key="stayUpdated" class="text-lg font-semibold mb-4">Stay Updated</h3>
+                    <p data-translate="footer" data-key="newsletter" class="text-sm text-gray-300 mb-4">Subscribe to our newsletter for exclusive deals and updates.</p>
+                    <form class="flex flex-col sm:flex-row">
+                        <input type="email" data-translate-attr="placeholder:footer.emailPlaceholder" placeholder="Your email" class="px-4 py-2 rounded-l focus:outline-none text-gray-800 mb-2 sm:mb-0">
+                        <button type="submit" data-translate="footer" data-key="subscribe" class="bg-accent hover:bg-dark text-white px-4 py-2 rounded-r transition duration-300">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Bottom footer -->
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <!-- Copyright -->
+                <div data-translate="footer" data-key="copyright" class="text-sm text-gray-400 mb-4 md:mb-0">
+                    &copy; 2025 Maui Hostels. All rights reserved.
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Facebook">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.07 4.849-.07z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="TikTok">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="WhatsApp">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Twitter">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/language-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
