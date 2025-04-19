@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Maui Hostels in Tulum & Playa del Carmen</title>
+    <!-- Tailwind CDN for development - Replace with your compiled version for production -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icons CDN -->
+    <script src="https://kit.fontawesome.com/91879b8b78.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Simplified analog color scheme
+                        primary: '#2A4B5E',    // Deep teal/navy from logo
+                        accent: '#4A7A96',     // Lighter blue accent
+                        sand: '#F2EFE9',       // Light sand/off-white
+                        dark: '#1A2E3A',       // Darker shade of primary
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Custom styles that can't be handled by Tailwind -->
+    <style>
+        @font-face {
+            font-family: 'Tan Nimbus';
+            src: url('assets/fonts/TAN-NIMBUS.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* This helps with font loading behavior */
+        }
+        
+        /* Create a utility class to apply the font */
+        .font-tan-nimbus {
+            font-family: 'Tan Nimbus', serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Tan Nimbus', serif;
+        }
+        
+        /* Text shadow for better readability on variable backgrounds */
+        .text-shadow {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Add some spacing to account for the fixed header */
+        body {
+            padding-top: 0; /* Will be adjusted by JavaScript on load */
+        }
+        
+        /* For smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Gallery lightbox styles */
+        .gallery-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 80vh;
+            margin: auto;
+            display: block;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-sand">
+    <!-- Header/Navigation -->
+    <header class="bg-primary text-white shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <!-- Language Toggle -->
+            <div class="flex justify-end mb-2">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" id="lang-en" class="bg-accent px-4 py-1 text-sm font-medium text-white rounded-l-lg focus:z-10 focus:outline-none">
+                        EN
+                    </button>
+                    <button type="button" id="lang-es" class="bg-dark hover:bg-accent px-4 py-1 text-sm font-medium text-white rounded-r-lg focus:z-10 focus:outline-none transition duration-300">
+                        ES
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-14 brightness-0 invert">
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:block"> <!-- Hidden on mobile, visible on medium screens and up -->
+                    <!-- Navigation Menu - Using data-translate approach -->
+                    <ul id="desktop-nav" class="flex space-x-8">
+                        <li><a href="index.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="home">Home</a></li>
+                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities</a></li>
+                        <li><a href="gallery.html" class="font-semibold border-b-2 border-accent" data-translate="nav" data-key="gallery">Gallery</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
+                <!-- Mobile menu using data-translate approach -->
+                <ul id="mobile-nav" class="flex flex-col space-y-3">
+                    <li><a href="index.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="home">Home</a></li>
+                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tours">Tours</a></li>
+                    <li><a href="gallery.html" class="block font-semibold text-accent" data-translate="nav" data-key="gallery">Gallery</a></li>
+                    <li><a href="contact.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Gallery Page Hero Banner -->
+    <section class="pt-40 pb-24 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <img src="images/general/gallery-hero-bg.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true">
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center">
+                <h1 data-translate="gallery" data-key="title" class="text-4xl md:text-5xl font-bold text-white mb-6">Our Gallery</h1>
+                <p data-translate="gallery" data-key="subtitle" class="text-xl text-white text-opacity-90 max-w-2xl mx-auto mb-8">
+                    Take a visual journey through our beautiful locations and room styles.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Wave divider -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" class="w-full">
+                <path fill="#F2EFE9" fill-opacity="1" d="M0,32L80,42.7C160,53,320,75,480,69.3C640,64,800,32,960,21.3C1120,11,1280,21,1360,26.7L1440,32L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path>
+            </svg>
+        </div>
+    </section>
+    <!-- Gallery Navigation Tabs -->
+     <!-- gone for now 
+    <section class="pt-16 pb-8 bg-sand">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center mb-12">
+                <button id="all-tab" class="gallery-tab bg-primary text-white px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent transition duration-300">
+                    All Photos
+                </button>
+                <button id="tulum-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
+                    Tulum
+                </button>
+                <button id="playa-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
+                    Playa del Carmen
+                </button>
+                <button id="rooms-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
+                    Room Types
+                </button>
+                <button id="amenities-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
+                    Amenities
+                </button>
+            </div>
+        </div>
+    </section>-->
+
+
+    <!-- Main Gallery Content -->
+    <section class="py-8 bg-sand">
+        <div class="container mx-auto px-4">
+            <!-- Tulum Hostel Room Styles Section -->
+            <div class="mb-16">
+                <h2 data-translate="gallery" data-key="tulumRooms" class="text-3xl font-bold text-primary mb-8 text-center">Tulum Hostel Room Styles</h2>
+                
+                <!-- Room Types Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Private Room -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="images/tulum/tulum-private-room.jpg" alt="Tulum Private Room" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-primary bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <button class="view-gallery bg-accent text-white py-2 px-4 rounded-lg transform -translate-y-2 hover:translate-y-0 transition duration-300">
+                                    View Gallery
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">Private Room</h3>
+                            <p class="text-gray-600 mb-4">Our cozy private rooms offer a perfect retreat with a comfortable queen bed, private bathroom, and beautiful ocean views.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Queen Bed</span>
+                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Private Bathroom</span>
+                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Air Conditioning</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4-Bed Dorm -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="images/tulum/tulum-4bed-dorm.jpg" alt="Tulum 4-Bed Dorm" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-primary bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <button class="view-gallery bg-accent text-white py-2 px-4 rounded-lg transform -translate-y-2 hover:translate-y-0 transition duration-300">
+                                    View Gallery
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">4-Bed Dorm</h3>
+                            <p class="text-gray-600 mb-4">Our intimate 4-bed dorms are perfect for small groups or solo travelers looking to make new friends in a more private setting.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Single Beds</span>
+                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Shared Bathroom</span>
+                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Ceiling Fan</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other room types... -->
+                </div>
+            </div>
+            
+            <!-- Other sections... -->
+            
+            <!-- Image Gallery Section -->
+            <div>
+                <h2 data-translate="gallery" data-key="amenitiesTitle" class="text-3xl font-bold text-primary mb-8 text-center">Common Areas & Amenities</h2>
+                
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Gallery items will be populated here -->
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                        <img src="images/tulum/tulum-hostel-1.jpeg" alt="Tulum Beach View" class="w-full h-full object-cover">
+                    </div>
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                        <img src="images/tulum/tulum-hostel-2.jpeg" alt="Tulum Common Area" class="w-full h-full object-cover">
+                    </div>
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                        <img src="images/tulum/tulum-hostel-3.jpg" alt="Tulum Restaurant" class="w-full h-full object-cover">
+                    </div>
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                        <img src="images/tulum/tulum-hostel-4.jpg" alt="Tulum Pool" class="w-full h-full object-cover">
+                    </div>
+                    <!-- More gallery items... -->
+                </div>
+                
+                <!-- View More Gallery Button -->
+                <div class="text-center mt-10">
+                    <button id="load-more" class="bg-primary hover:bg-accent text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg">
+                        <span data-translate="gallery" data-key="loadMore">Load More</span>
+                        <i class="fa-solid fa-circle-plus ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox for Gallery Images - Using only Tailwind classes -->
+    <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black bg-opacity-90 items-center justify-center">
+        <span class="close absolute top-4 right-4 text-white text-4xl cursor-pointer">&times;</span>
+        <img id="lightbox-img" class="max-w-[90%] max-h-[80vh] mx-auto my-auto">
+        <!-- Arrow controls for navigation -->
+        <button id="prev-btn" class="absolute left-4 text-white text-4xl opacity-70 hover:opacity-100 focus:outline-none">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="next-btn" class="absolute right-4 text-white text-4xl opacity-70 hover:opacity-100 focus:outline-none">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-accent relative" style="background-image: url('images/general/cta-bg.jpg'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black opacity-80"></div> <!-- Overlay -->
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 data-translate="cta" data-key="title" class="text-3xl font-bold text-white mb-6">Ready for Your Next Adventure?</h2>
+            <p data-translate="cta" data-key="description" class="text-white text-lg mb-8 max-w-2xl mx-auto">Book your stay at one of our paradise locations and discover why travelers from around the world choose Maui Hostels.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#" data-translate="cta" data-key="bookMaui" class="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-dark hover:text-white transition duration-300">Book Tulum</a>
+                <a href="#" data-translate="cta" data-key="bookPlaya" class="bg-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-primary transition duration-300">Book Playa del Carmen</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo and brief description -->
+                <div class="md:col-span-1">
+                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-12 mb-4 brightness-0 invert">
+                    <p data-translate="footer" data-key="description" class="text-sm text-gray-300">Experience paradise at our hostels in Maui and Playa del Carmen.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 data-translate="footer" data-key="quickLinks" class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" data-translate="nav" data-key="home" class="text-gray-300 hover:text-accent transition duration-300">Home</a></li>
+                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities</a></li>
+                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Gallery</a></li>
+                        <li><a href="contact.html" data-translate="nav" data-key="contact" class="text-gray-300 hover:text-accent transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Locations -->
+                <div>
+                    <h3 data-translate="footer" data-key="locations" class="text-lg font-semibold mb-4">Our Locations</h3>
+                    <div>
+                        <h4 class="font-medium">Tulum</h4>
+                        <address class="text-gray-300 not-italic">123 Beach Road<br>Tulum<br>Quintana Roo, Mexico</address>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">Playa del Carmen</h4>
+                        <address class="text-gray-300 not-italic">456 Quinta Avenida<br>Playa del Carmen<br>Quintana Roo, Mexico</address>
+                    </div>
+                </div>
+                
+                <!-- Newsletter sign-up -->
+                <div>
+                    <h3 data-translate="footer" data-key="stayUpdated" class="text-lg font-semibold mb-4">Stay Updated</h3>
+                    <p data-translate="footer" data-key="newsletter" class="text-sm text-gray-300 mb-4">Subscribe to our newsletter for exclusive deals and updates.</p>
+                    <form class="flex flex-col sm:flex-row">
+                        <input type="email" data-translate-attr="placeholder:footer.emailPlaceholder" placeholder="Your email" class="px-4 py-2 rounded-l focus:outline-none text-gray-800 mb-2 sm:mb-0">
+                        <button type="submit" data-translate="footer" data-key="subscribe" class="bg-accent hover:bg-dark text-white px-4 py-2 rounded-r transition duration-300">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Bottom footer -->
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <!-- Copyright -->
+                <div data-translate="footer" data-key="copyright" class="text-sm text-gray-400 mb-4 md:mb-0">
+                    &copy; 2025 Maui Hostels. All rights reserved.
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Facebook">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.07 4.849-.07z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="TikTok">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="WhatsApp">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Twitter">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/language-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Maui Hostels in Tulum & Playa del Carmen</title>
+    <!-- Tailwind CDN for development - Replace with your compiled version for production -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icons CDN -->
+    <script src="https://kit.fontawesome.com/91879b8b78.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Simplified analog color scheme
+                        primary: '#2A4B5E',    // Deep teal/navy from logo
+                        accent: '#4A7A96',     // Lighter blue accent
+                        sand: '#F2EFE9',       // Light sand/off-white
+                        dark: '#1A2E3A',       // Darker shade of primary
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Custom styles that can't be handled by Tailwind -->
+    <style>
+        @font-face {
+            font-family: 'Tan Nimbus';
+            src: url('assets/fonts/TAN-NIMBUS.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* This helps with font loading behavior */
+        }
+        
+        /* Create a utility class to apply the font */
+        .font-tan-nimbus {
+            font-family: 'Tan Nimbus', serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Tan Nimbus', serif;
+        }
+        
+        /* Text shadow for better readability on variable backgrounds */
+        .text-shadow {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Add some spacing to account for the fixed header */
+        body {
+            padding-top: 0; /* Will be adjusted by JavaScript on load */
+        }
+        
+        /* For smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Map container styling */
+        .map-container {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="bg-sand">
+    <!-- Header/Navigation -->
+    <header class="bg-primary text-white shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <!-- Language Toggle -->
+            <div class="flex justify-end mb-2">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" id="lang-en" class="bg-accent px-4 py-1 text-sm font-medium text-white rounded-l-lg focus:z-10 focus:outline-none">
+                        EN
+                    </button>
+                    <button type="button" id="lang-es" class="bg-dark hover:bg-accent px-4 py-1 text-sm font-medium text-white rounded-r-lg focus:z-10 focus:outline-none transition duration-300">
+                        ES
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-14 brightness-0 invert">
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:block"> <!-- Hidden on mobile, visible on medium screens and up -->
+                    <!-- Navigation Menu - Using data-translate approach -->
+                    <ul id="desktop-nav" class="flex space-x-8">
+                        <li><a href="index.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="home">Home</a></li>
+                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities</a></li>
+                        <li><a href="gallery.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Gallery</a></li>
+                        <li><a href="contact.html" class="font-semibold border-b-2 border-accent" data-translate="nav" data-key="contact">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
+                <!-- Mobile menu using data-translate approach -->
+                <ul id="mobile-nav" class="flex flex-col space-y-3">
+                    <li><a href="index.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="home">Home</a></li>
+                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tours">Tours</a></li>
+                    <li><a href="gallery.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Gallery</a></li>
+                    <li><a href="contact.html" class="block font-semibold text-accent" data-translate="nav" data-key="contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Page Hero Banner -->
+    <section class="pt-40 pb-24 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <img src="images/general/contact-hero-bg.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true">
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center">
+                <h1 data-translate="contact" data-key="title" class="text-4xl md:text-5xl font-bold text-white mb-6">Contact Us</h1>
+                <p data-translate="contact" data-key="subtitle" class="text-xl text-white text-opacity-90 max-w-2xl mx-auto mb-8">
+                    Have questions or ready to book your stay? We're here to help you plan your perfect paradise getaway.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Wave divider -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" class="w-full">
+                <path fill="#F2EFE9" fill-opacity="1" d="M0,32L80,42.7C160,53,320,75,480,69.3C640,64,800,32,960,21.3C1120,11,1280,21,1360,26.7L1440,32L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Main Contact Content -->
+    <section class="py-16 bg-sand">
+        <div class="container mx-auto px-4">
+            <!-- First Row: Contact Info and Form -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Contact Information Column -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 data-translate="contact" data-key="getInTouch" class="text-3xl font-bold text-primary mb-8">Get in Touch</h2>
+                    
+                    <!-- Email Contact -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-primary mb-2">
+                            <i class="fa-solid fa-envelope text-accent mr-2"></i>
+                            <span data-translate="contact" data-key="emailUs">Email Us</span>
+                        </h3>
+                        <a href="mailto:mauihostels@gmail.com" class="text-lg hover:text-accent transition duration-300">mauihostels@gmail.com</a>
+                    </div>
+                    
+                    <!-- Locations Section -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-primary mb-6">
+                            <i class="fa-solid fa-location-dot text-accent mr-2"></i>
+                            <span data-translate="contact" data-key="locations">Our Locations</span>
+                        </h3>
+                        
+                        <!-- Tulum Location -->
+                        <div class="bg-sand rounded-lg p-6 mb-6 hover:shadow-md transition duration-300">
+                            <h4 data-translate="contact" data-key="tulumLocation" class="text-lg font-semibold text-primary mb-3">Maui Hostel Tulum</h4>
+                            
+                            <p class="mb-3">123 Beach Road<br>Tulum<br>Quintana Roo, Mexico</p>
+                            
+                            <!-- Phone -->
+                            <div class="flex items-center mb-3">
+                                <i class="fa-solid fa-phone text-accent mr-2"></i>
+                                <a href="tel:+5219991996716" class="hover:text-accent transition duration-300">+52 1 999 199 6716</a>
+                            </div>
+                            
+                            <!-- WhatsApp Button -->
+                            <a href="https://api.whatsapp.com/send?phone=5219991996716" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300">
+                                <i class="fa-brands fa-whatsapp mr-2 text-lg"></i>
+                                <span data-translate="contact" data-key="whatsappUs">WhatsApp Us</span>
+                            </a>
+                        </div>
+                        
+                        <!-- Playa del Carmen Location -->
+                        <div class="bg-sand rounded-lg p-6 hover:shadow-md transition duration-300">
+                            <h4 data-translate="contact" data-key="playaLocation" class="text-lg font-semibold text-primary mb-3">Maui Hostel Playa del Carmen</h4>
+                            
+                            <p class="mb-3">456 Quinta Avenida<br>Playa del Carmen<br>Quintana Roo, Mexico</p>
+                            
+                            <!-- Phone -->
+                            <div class="flex items-center mb-3">
+                                <i class="fa-solid fa-phone text-accent mr-2"></i>
+                                <a href="tel:+529841782718" class="hover:text-accent transition duration-300">+52 984 178 2718</a>
+                            </div>
+                            
+                            <!-- WhatsApp Button -->
+                            <a href="https://wa.link/gxxujn" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300">
+                                <i class="fa-brands fa-whatsapp mr-2 text-lg"></i>
+                                <span data-translate="contact" data-key="whatsappUs">WhatsApp Us</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Column -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 data-translate="contact" data-key="sendMessage" class="text-3xl font-bold text-primary mb-6">Send Us a Message</h2>
+                    
+                    <form id="contact-form" class="space-y-6">
+                        <!-- Name Field -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1" data-translate="contact" data-key="nameLabel">Your Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent transition duration-200" data-translate-attr="placeholder:contact.namePlaceholder" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <!-- Email Field -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1" data-translate="contact" data-key="emailLabel">Your Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent transition duration-200" data-translate-attr="placeholder:contact.emailPlaceholder" placeholder="Enter your email address" required>
+                        </div>
+                        
+                        <!-- Location Selector -->
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700 mb-1" data-translate="contact" data-key="locationLabel">I'm interested in</label>
+                            <select id="location" name="location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent transition duration-200 bg-white">
+                                <option value="both" data-translate="contact" data-key="bothLocations">Both Locations</option>
+                                <option value="tulum" data-translate="contact" data-key="tulumOption">Tulum Hostel</option>
+                                <option value="playa" data-translate="contact" data-key="playaOption">Playa del Carmen Hostel</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Subject Field -->
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1" data-translate="contact" data-key="subjectLabel">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent transition duration-200" data-translate-attr="placeholder:contact.subjectPlaceholder" placeholder="What is your message about?">
+                        </div>
+                        
+                        <!-- Message Field -->
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1" data-translate="contact" data-key="messageLabel">Your Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent transition duration-200 resize-none" data-translate-attr="placeholder:contact.messagePlaceholder" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div>
+                            <button type="submit" class="w-full bg-primary hover:bg-accent text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg" data-translate="contact" data-key="sendButton">
+                                Send Message
+                            </button>
+                        </div>
+                        
+                        <!-- Form Note -->
+                        <p class="text-sm text-gray-500 italic" data-translate="contact" data-key="formNote">
+                            We'll get back to you as soon as possible, usually within 24 hours.
+                        </p>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Second Row: Maps -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Tulum Map -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-4">
+                        <i class="fa-solid fa-map-location-dot text-accent mr-2"></i>
+                        <span data-translate="contact" data-key="findTulum">Find Us in Tulum</span>
+                    </h3>
+                    <div class="map-container h-80">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3740.989929081866!2d-87.46426688518825!3d20.215182686434985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4fd40310e42a4b%3A0xeedc0db93ff9f23!2sTulum%2C%20Quintana%20Roo%2C%20Mexico!5e0!3m2!1sen!2sus!4v1713640323844!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of Tulum location"></iframe>
+                    </div>
+                </div>
+                
+                <!-- Playa del Carmen Map -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-4">
+                        <i class="fa-solid fa-map-location-dot text-accent mr-2"></i>
+                        <span data-translate="contact" data-key="findPlaya">Find Us in Playa del Carmen</span>
+                    </h3>
+                    <div class="map-container h-80">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14972.078307082073!2d-87.08248231218143!3d20.628673835747095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4e4323d22d4e61%3A0xff2d46f68664d193!2sPlaya%20del%20Carmen%2C%20Quintana%20Roo%2C%20Mexico!5e0!3m2!1sen!2sus!4v1713640400144!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of Playa del Carmen location"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Third Row: Full Width Gallery -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 data-translate="contact" data-key="exploreGallery" class="text-3xl font-bold text-primary mb-6">Explore Our Paradise</h2>
+                
+                <!-- Photo Grid - Larger images in a more prominent layout -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="overflow-hidden rounded-lg shadow-md aspect-square">
+                        <img src="images/tulum/tulum-hostel-1.jpeg" alt="Tulum Beach View" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    
+                    <div class="overflow-hidden rounded-lg shadow-md aspect-square">
+                        <img src="images/playa/playa-hostel-3.jpg" alt="Playa del Carmen Room" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    
+                    <div class="overflow-hidden rounded-lg shadow-md aspect-square">
+                        <img src="images/tulum/tulum-hostel-5.jpg" alt="Tulum Surroundings" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    
+                    <div class="overflow-hidden rounded-lg shadow-md aspect-square">
+                        <img src="images/playa/playa-hostel-1.jpg" alt="Playa View" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                </div>
+                
+                <!-- Gallery Link Button -->
+                <div class="text-center mt-8">
+                    <a href="gallery.html" class="inline-flex items-center justify-center bg-primary hover:bg-accent text-white font-medium py-3 px-8 rounded-lg transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                        <span data-translate="contact" data-key="viewFullGallery">View Full Gallery</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Social Media Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 data-translate="contact" data-key="connectSocial" class="text-3xl font-bold text-primary mb-2">Connect With Us</h2>
+            <p data-translate="contact" data-key="socialSubtitle" class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                Follow us on social media for the latest updates, promotions, and a glimpse into paradise.
+            </p>
+            
+            <!-- Social Media Icons -->
+            <div class="flex justify-center space-x-6">
+                <a href="https://www.facebook.com/mauihostels?locale=es_LA" class="bg-primary hover:bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f text-xl"></i>
+                </a>
+                <a href="https://www.instagram.com/mauihostels" class="bg-primary hover:bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram text-xl"></i>
+                </a>
+                <a href="https://www.tiktok.com/@mauihostel" class="bg-primary hover:bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1" aria-label="TikTok">
+                    <i class="fa-brands fa-tiktok text-xl"></i>
+                </a>
+                <a href="https://wa.link/gxxujn" class="bg-primary hover:bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gradient-to-b from-sand to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-translate="contact" data-key="faqTitle" class="text-3xl font-bold text-primary mb-2">Frequently Asked Questions</h2>
+                <p data-translate="contact" data-key="faqSubtitle" class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Find quick answers to common questions about our hostels.
+                </p>
+                <!-- Decorative element -->
+                <div class="flex justify-center mt-4">
+                    <div class="w-16 h-1 bg-accent rounded-full"></div>
+                </div>
+            </div>
+            
+            <!-- FAQ Accordion -->
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                    <button class="faq-toggle w-full bg-white px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition duration-300 focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-clock text-accent text-lg mr-3"></i>
+                            <span class="text-lg font-medium text-primary" data-translate="contact" data-key="faq1Q">What's the check-in/check-out time?</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 py-4 bg-white border-t border-gray-200">
+                        <p class="text-gray-700 pl-9" data-translate="contact" data-key="faq1A">
+                            Check-in is available from 3:00 PM, and check-out is until 11:00 AM. Early check-in or late check-out may be available upon request, subject to availability and additional fees.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                    <button class="faq-toggle w-full bg-white px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition duration-300 focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-shuttle-van text-accent text-lg mr-3"></i>
+                            <span class="text-lg font-medium text-primary" data-translate="contact" data-key="faq2Q">Do you offer airport transfers?</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 py-4 bg-white border-t border-gray-200">
+                        <p class="text-gray-700 pl-9" data-translate="contact" data-key="faq2A">
+                            Yes, we offer airport transfers from Cancun International Airport to both our locations for an additional fee. Please contact us at least 48 hours before your arrival to arrange this service.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                    <button class="faq-toggle w-full bg-white px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition duration-300 focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-utensils text-accent text-lg mr-3"></i>
+                            <span class="text-lg font-medium text-primary" data-translate="contact" data-key="faq3Q">Is breakfast included?</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 py-4 bg-white border-t border-gray-200">
+                        <p class="text-gray-700 pl-9" data-translate="contact" data-key="faq3A">
+                            Yes, a complimentary continental breakfast is included with your stay at both of our locations. Breakfast is served from 7:30 AM to 10:30 AM daily.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                    <button class="faq-toggle w-full bg-white px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition duration-300 focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-wifi text-accent text-lg mr-3"></i>
+                            <span class="text-lg font-medium text-primary" data-translate="contact" data-key="faq4Q">Do you have Wi-Fi?</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 py-4 bg-white border-t border-gray-200">
+                        <p class="text-gray-700 pl-9" data-translate="contact" data-key="faq4A">
+                            Yes, we offer free Wi-Fi throughout both hostels, including in all rooms, common areas, and outdoor spaces.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                    <button class="faq-toggle w-full bg-white px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition duration-300 focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-umbrella-beach text-accent text-lg mr-3"></i>
+                            <span class="text-lg font-medium text-primary" data-translate="contact" data-key="faq5Q">How do I book activities and tours?</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 py-4 bg-white border-t border-gray-200">
+                        <p class="text-gray-700 pl-9" data-translate="contact" data-key="faq5A">
+                            You can book activities and tours directly at our reception desk. Our staff will help you find the best options based on your interests and schedule. We recommend booking at least one day in advance for popular tours.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-accent relative" style="background-image: url('images/general/cta-bg.jpg'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black opacity-80"></div> <!-- Overlay -->
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 data-translate="cta" data-key="title" class="text-3xl font-bold text-white mb-6">Ready for Your Next Adventure?</h2>
+            <p data-translate="cta" data-key="description" class="text-white text-lg mb-8 max-w-2xl mx-auto">Book your stay at one of our paradise locations and discover why travelers from around the world choose Maui Hostels.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#" data-translate="cta" data-key="bookMaui" class="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-dark hover:text-white transition duration-300">Book Tulum</a>
+                <a href="#" data-translate="cta" data-key="bookPlaya" class="bg-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-primary transition duration-300">Book Playa del Carmen</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo and brief description -->
+                <div class="md:col-span-1">
+                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-12 mb-4 brightness-0 invert">
+                    <p data-translate="footer" data-key="description" class="text-sm text-gray-300">Experience paradise at our hostels in Maui and Playa del Carmen.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 data-translate="footer" data-key="quickLinks" class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" data-translate="nav" data-key="home" class="text-gray-300 hover:text-accent transition duration-300">Home</a></li>
+                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities</a></li>
+                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Gallery</a></li>
+                        <li><a href="contact.html" data-translate="nav" data-key="contact" class="text-gray-300 hover:text-accent transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Locations -->
+                <div>
+                    <h3 data-translate="footer" data-key="locations" class="text-lg font-semibold mb-4">Our Locations</h3>
+                    <div>
+                        <h4 class="font-medium">Tulum</h4>
+                        <address class="text-gray-300 not-italic">123 Beach Road<br>Tulum<br>Quintana Roo, Mexico</address>
+                    </div>
+                    <div>
+                        <h4 class="font-medium">Playa del Carmen</h4>
+                        <address class="text-gray-300 not-italic">456 Quinta Avenida<br>Playa del Carmen<br>Quintana Roo, Mexico</address>
+                    </div>
+                </div>
+                
+                <!-- Newsletter sign-up -->
+                <div>
+                    <h3 data-translate="footer" data-key="stayUpdated" class="text-lg font-semibold mb-4">Stay Updated</h3>
+                    <p data-translate="footer" data-key="newsletter" class="text-sm text-gray-300 mb-4">Subscribe to our newsletter for exclusive deals and updates.</p>
+                    <form class="flex flex-col sm:flex-row">
+                        <input type="email" data-translate-attr="placeholder:footer.emailPlaceholder" placeholder="Your email" class="px-4 py-2 rounded-l focus:outline-none text-gray-800 mb-2 sm:mb-0">
+                        <button type="submit" data-translate="footer" data-key="subscribe" class="bg-accent hover:bg-dark text-white px-4 py-2 rounded-r transition duration-300">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Bottom footer -->
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <!-- Copyright -->
+                <div data-translate="footer" data-key="copyright" class="text-sm text-gray-400 mb-4 md:mb-0">
+                    &copy; 2025 Maui Hostels. All rights reserved.
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Facebook">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.07 4.849-.07z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="TikTok">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="WhatsApp">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition duration-300" aria-label="Twitter">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/language-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
