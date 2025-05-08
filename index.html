@@ -100,16 +100,30 @@
             <div class="flex justify-between items-center">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-14 brightness-0 invert">
+                    <a href="index.html">
+                        <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-20 brightness-0 invert">
+                    </a>
                 </div>
                 
                 <!-- Navigation -->
-                <nav class="hidden md:block"> <!-- Hidden on mobile, visible on medium screens and up -->
-                    <!-- Navigation Menu - Using data-translate approach -->
+                <nav class="hidden md:block">
                     <ul id="desktop-nav" class="flex space-x-8">
+                        <li class="relative group">
+                            <a href="#" class="hover:text-accent transition duration-300 flex items-center" data-translate="nav" data-key="rooms">
+                                Rooms
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- Fixed dropdown - removed mt-2 and added pt-3 -->
+                            <div class="absolute left-0 w-48 bg-white rounded-md shadow-lg py-1 pt-3 top-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300 z-50">
+                                <a href="tulum-rooms.html" class="block px-4 py-2 text-sm text-primary hover:bg-sand transition duration-300" data-translate="nav" data-key="tulumRooms">Rooms in Tulum</a>
+                                <a href="playa-rooms.html" class="block px-4 py-2 text-sm text-primary hover:bg-sand transition duration-300" data-translate="nav" data-key="playaRooms">Rooms in Playa del Carmen</a>
+                            </div>
+                        </li>
                         <li><a href="index.html" class="font-semibold border-b-2 border-accent" data-translate="nav" data-key="home">Home</a></li>
-                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Actividades</a></li>
-                        <li><a href="gallery.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Gallery</a></li>
+                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities & Tours</a></li>
+                        <li><a href="gallery.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Blog & Gallery</a></li>
                         <li><a href="contact.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
                     </ul>
                 </nav>
@@ -128,10 +142,21 @@
             <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
                 <!-- Mobile menu using data-translate approach -->
                 <ul id="mobile-nav" class="flex flex-col space-y-3">
+                    <li>
+                        <button id="mobile-rooms-toggle" class="flex w-full items-center justify-between text-left hover:text-accent transition duration-300" data-translate="nav" data-key="rooms">
+                            Rooms
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform" id="mobile-rooms-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="mobile-rooms-submenu" class="hidden pl-4 mt-2 space-y-2">
+                            <a href="tulum-rooms.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tulumRooms">Rooms in Tulum</a>
+                            <a href="playa-rooms.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="playaRooms">Rooms in Playa del Carmen</a>
+                        </div>
+                    </li>
                     <li><a href="index.html" class="block font-semibold text-accent" data-translate="nav" data-key="home">Home</a></li>
-                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tours">Tours</a></li>
-                    <li><a href="blog.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="blog">Blog</a></li>
-                    <li><a href="gallery.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Gallery</a></li>
+                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities & Tours</a></li>
+                    <li><a href="gallery.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="gallery">Blog & Gallery</a></li>
                     <li><a href="contact.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
                 </ul>
             </div>
@@ -606,8 +631,8 @@
                     <h3 data-translate="footer" data-key="quickLinks" class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
                         <li><a href="index.html" data-translate="nav" data-key="home" class="text-gray-300 hover:text-accent transition duration-300">Home</a></li>
-                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities</a></li>
-                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Gallery</a></li>
+                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities & Tours</a></li>
+                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Blog & Gallery</a></li>
                         <li><a href="contact.html" data-translate="nav" data-key="contact" class="text-gray-300 hover:text-accent transition duration-300">Contact</a></li>
                     </ul>
                 </div>

@@ -112,16 +112,30 @@
             <div class="flex justify-between items-center">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-14 brightness-0 invert">
+                    <a href="index.html">
+                        <img src="assets/logo.png" alt="Maui Hostels Logo" class="h-20 brightness-0 invert">
+                    </a>
                 </div>
                 
                 <!-- Navigation -->
-                <nav class="hidden md:block"> <!-- Hidden on mobile, visible on medium screens and up -->
-                    <!-- Navigation Menu - Using data-translate approach -->
+                <nav class="hidden md:block">
                     <ul id="desktop-nav" class="flex space-x-8">
+                        <li class="relative group">
+                            <a href="#" class="hover:text-accent transition duration-300 flex items-center" data-translate="nav" data-key="rooms">
+                                Rooms
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- Fixed dropdown - removed mt-2 and added pt-3 -->
+                            <div class="absolute left-0 w-48 bg-white rounded-md shadow-lg py-1 pt-3 top-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300 z-50">
+                                <a href="tulum-rooms.html" class="block px-4 py-2 text-sm text-primary hover:bg-sand transition duration-300" data-translate="nav" data-key="tulumRooms">Rooms in Tulum</a>
+                                <a href="playa-rooms.html" class="block px-4 py-2 text-sm text-primary hover:bg-sand transition duration-300" data-translate="nav" data-key="playaRooms">Rooms in Playa del Carmen</a>
+                            </div>
+                        </li>
                         <li><a href="index.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="home">Home</a></li>
-                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities</a></li>
-                        <li><a href="gallery.html" class="font-semibold border-b-2 border-accent" data-translate="nav" data-key="gallery">Gallery</a></li>
+                        <li><a href="tours.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities & Tours</a></li>
+                        <li><a href="gallery.html" class="font-semibold border-b-2 border-accent" data-translate="nav" data-key="gallery">Blog & Gallery</a></li>
                         <li><a href="contact.html" class="hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
                     </ul>
                 </nav>
@@ -140,25 +154,37 @@
             <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
                 <!-- Mobile menu using data-translate approach -->
                 <ul id="mobile-nav" class="flex flex-col space-y-3">
+                    <li>
+                        <button id="mobile-rooms-toggle" class="flex w-full items-center justify-between text-left hover:text-accent transition duration-300" data-translate="nav" data-key="rooms">
+                            Rooms
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform" id="mobile-rooms-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="mobile-rooms-submenu" class="hidden pl-4 mt-2 space-y-2">
+                            <a href="tulum-rooms.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tulumRooms">Rooms in Tulum</a>
+                            <a href="playa-rooms.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="playaRooms">Rooms in Playa del Carmen</a>
+                        </div>
+                    </li>
                     <li><a href="index.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="home">Home</a></li>
-                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="tours">Tours</a></li>
-                    <li><a href="gallery.html" class="block font-semibold text-accent" data-translate="nav" data-key="gallery">Gallery</a></li>
+                    <li><a href="tours.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="activities">Activities & Tours</a></li>
+                    <li><a href="gallery.html" class="block font-semibold text-accent" data-translate="nav" data-key="gallery">Blog & Gallery</a></li>
                     <li><a href="contact.html" class="block hover:text-accent transition duration-300" data-translate="nav" data-key="contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </header>
 
-    <!-- Gallery Page Hero Banner -->
+    <!-- Hero section remains the same but with updated title and subtitle -->
     <section class="pt-40 pb-24 bg-primary relative overflow-hidden">
         <div class="absolute inset-0 opacity-20">
             <img src="images/general/gallery-hero-bg.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true">
         </div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center">
-                <h1 data-translate="gallery" data-key="title" class="text-4xl md:text-5xl font-bold text-white mb-6">Our Gallery</h1>
-                <p data-translate="gallery" data-key="subtitle" class="text-xl text-white text-opacity-90 max-w-2xl mx-auto mb-8">
-                    Take a visual journey through our beautiful locations and room styles.
+                <h1 data-translate="blogGallery" data-key="title" class="text-4xl md:text-5xl font-bold text-white mb-6">Blog & Gallery</h1>
+                <p data-translate="blogGallery" data-key="subtitle" class="text-xl text-white text-opacity-90 max-w-2xl mx-auto mb-8">
+                    Stories from paradise and visual journeys through our beautiful hostels
                 </p>
             </div>
         </div>
@@ -170,120 +196,143 @@
             </svg>
         </div>
     </section>
-    <!-- Gallery Navigation Tabs -->
-     <!-- gone for now 
-    <section class="pt-16 pb-8 bg-sand">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-wrap justify-center mb-12">
-                <button id="all-tab" class="gallery-tab bg-primary text-white px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent transition duration-300">
-                    All Photos
-                </button>
-                <button id="tulum-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
-                    Tulum
-                </button>
-                <button id="playa-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
-                    Playa del Carmen
-                </button>
-                <button id="rooms-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
-                    Room Types
-                </button>
-                <button id="amenities-tab" class="gallery-tab bg-white text-primary px-6 py-3 rounded-lg mx-2 mb-3 hover:bg-accent hover:text-white transition duration-300">
-                    Amenities
-                </button>
-            </div>
-        </div>
-    </section>-->
 
-
-    <!-- Main Gallery Content -->
-    <section class="py-8 bg-sand">
+    <!-- Blog Posts Section -->
+    <section class="py-16 bg-sand">
         <div class="container mx-auto px-4">
-            <!-- Tulum Hostel Room Styles Section -->
-            <div class="mb-16">
-                <h2 data-translate="gallery" data-key="tulumRooms" class="text-3xl font-bold text-primary mb-8 text-center">Tulum Hostel Room Styles</h2>
+            <h2 data-translate="blogGallery" data-key="blogTitle" class="text-3xl font-bold text-primary mb-8 text-center">Latest from the Blog</h2>
+            
+            <!-- Blog Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <!-- Blog Post 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="images/tulum/tulum-hostel-1.jpeg" alt="Top 5 Cenotes Near Tulum" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm">
+                            <span data-translate="blogGallery" data-key="travelTips">Travel Tips</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-primary mb-2" data-translate="blogGallery" data-key="post1Title">Top 5 Cenotes You Can't Miss Near Tulum</h3>
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <i class="fa-regular fa-calendar mr-2"></i>
+                            <span>May 2, 2025</span>
+                            <span class="mx-2">•</span>
+                            <i class="fa-regular fa-user mr-2"></i>
+                            <span>Maria</span>
+                        </div>
+                        <p class="text-gray-600 mb-4" data-translate="blogGallery" data-key="post1Excerpt">
+                            The Yucatán Peninsula is famous for its cenotes - natural sinkholes filled with crystal clear groundwater. These magical swimming spots were sacred to the ancient Mayans and today offer visitors a refreshing escape from the heat. Here are our top picks near Tulum...
+                        </p>
+                        <a href="#" class="inline-flex items-center text-accent hover:text-primary transition duration-300">
+                            <span data-translate="blogGallery" data-key="readMore">Read More</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
                 
-                <!-- Room Types Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Private Room -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                        <div class="relative h-64 overflow-hidden">
-                            <img src="images/tulum/tulum-private-room.jpg" alt="Tulum Private Room" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-primary bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                                <button class="view-gallery bg-accent text-white py-2 px-4 rounded-lg transform -translate-y-2 hover:translate-y-0 transition duration-300">
-                                    View Gallery
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-primary mb-2">Private Room</h3>
-                            <p class="text-gray-600 mb-4">Our cozy private rooms offer a perfect retreat with a comfortable queen bed, private bathroom, and beautiful ocean views.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Queen Bed</span>
-                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Private Bathroom</span>
-                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Air Conditioning</span>
-                            </div>
+                <!-- Blog Post 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="images/playa/playa-hostel-3.jpg" alt="Eco-Friendly Travel in Mexico" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-sm">
+                            <span data-translate="blogGallery" data-key="sustainable">Sustainable Travel</span>
                         </div>
                     </div>
-                    
-                    <!-- 4-Bed Dorm -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                        <div class="relative h-64 overflow-hidden">
-                            <img src="images/tulum/tulum-4bed-dorm.jpg" alt="Tulum 4-Bed Dorm" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-primary bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                                <button class="view-gallery bg-accent text-white py-2 px-4 rounded-lg transform -translate-y-2 hover:translate-y-0 transition duration-300">
-                                    View Gallery
-                                </button>
-                            </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-primary mb-2" data-translate="blogGallery" data-key="post2Title">Eco-Friendly Travel: Exploring Mexico Responsibly</h3>
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <i class="fa-regular fa-calendar mr-2"></i>
+                            <span>April 18, 2025</span>
+                            <span class="mx-2">•</span>
+                            <i class="fa-regular fa-user mr-2"></i>
+                            <span>Carlos</span>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-primary mb-2">4-Bed Dorm</h3>
-                            <p class="text-gray-600 mb-4">Our intimate 4-bed dorms are perfect for small groups or solo travelers looking to make new friends in a more private setting.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Single Beds</span>
-                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Shared Bathroom</span>
-                                <span class="bg-sand px-3 py-1 rounded-full text-sm text-primary">Ceiling Fan</span>
-                            </div>
-                        </div>
+                        <p class="text-gray-600 mb-4" data-translate="blogGallery" data-key="post2Excerpt">
+                            With its incredible biodiversity and fragile ecosystems, Mexico's Riviera Maya needs mindful travelers. From reef-safe sunscreen to supporting local communities, here are our tips for minimizing your environmental footprint while maximizing your positive impact...
+                        </p>
+                        <a href="#" class="inline-flex items-center text-accent hover:text-primary transition duration-300">
+                            <span data-translate="blogGallery" data-key="readMore">Read More</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
                     </div>
-                    
-                    <!-- Other room types... -->
                 </div>
             </div>
             
-            <!-- Other sections... -->
+            <!-- More Posts Button -->
+            <div class="text-center mb-16">
+                <a href="#" class="inline-flex items-center justify-center bg-primary hover:bg-accent text-white font-medium py-3 px-8 rounded-lg transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                    <span data-translate="blogGallery" data-key="morePosts">View More Posts</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
             
-            <!-- Image Gallery Section -->
-            <div>
-                <h2 data-translate="gallery" data-key="amenitiesTitle" class="text-3xl font-bold text-primary mb-8 text-center">Common Areas & Amenities</h2>
-                
-                <!-- Gallery Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Gallery items will be populated here -->
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
-                        <img src="images/tulum/tulum-hostel-1.jpeg" alt="Tulum Beach View" class="w-full h-full object-cover">
-                    </div>
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
-                        <img src="images/tulum/tulum-hostel-2.jpeg" alt="Tulum Common Area" class="w-full h-full object-cover">
-                    </div>
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
-                        <img src="images/tulum/tulum-hostel-3.jpg" alt="Tulum Restaurant" class="w-full h-full object-cover">
-                    </div>
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
-                        <img src="images/tulum/tulum-hostel-4.jpg" alt="Tulum Pool" class="w-full h-full object-cover">
-                    </div>
-                    <!-- More gallery items... -->
+            <!-- Gallery Section -->
+            <h2 data-translate="blogGallery" data-key="galleryTitle" class="text-3xl font-bold text-primary mb-8 text-center">Photo Gallery</h2>
+            
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gallery items - includes more images even if repeated -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-1.jpeg" alt="Tulum Beach View" class="w-full h-full object-cover">
                 </div>
-                
-                <!-- View More Gallery Button -->
-                <div class="text-center mt-10">
-                    <button id="load-more" class="bg-primary hover:bg-accent text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg">
-                        <span data-translate="gallery" data-key="loadMore">Load More</span>
-                        <i class="fa-solid fa-circle-plus ml-2"></i>
-                    </button>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-2.jpeg" alt="Tulum Common Area" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-3.jpg" alt="Tulum Restaurant" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-4.jpg" alt="Tulum Pool" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-5.jpg" alt="Tulum Surroundings" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-1.jpg" alt="Playa del Carmen View" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-2.jpg" alt="Playa del Carmen Beach" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-3.jpg" alt="Playa del Carmen Room" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-4.jpg" alt="Playa del Carmen Common Area" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-5.jpg" alt="Playa del Carmen Surroundings" class="w-full h-full object-cover">
+                </div>
+                <!-- Repeated images to fill out the gallery -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-1.jpeg" alt="Tulum Beach View" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-2.jpg" alt="Playa del Carmen Beach" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-3.jpg" alt="Tulum Restaurant" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-4.jpg" alt="Playa del Carmen Common Area" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="tulum">
+                    <img src="images/tulum/tulum-hostel-5.jpg" alt="Tulum Surroundings" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md h-48 cursor-pointer transition transform hover:scale-105" data-category="playa">
+                    <img src="images/playa/playa-hostel-1.jpg" alt="Playa del Carmen View" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
     </section>
+
+
 
     <!-- Lightbox for Gallery Images - Using only Tailwind classes -->
     <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black bg-opacity-90 items-center justify-center">
@@ -326,8 +375,8 @@
                     <h3 data-translate="footer" data-key="quickLinks" class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
                         <li><a href="index.html" data-translate="nav" data-key="home" class="text-gray-300 hover:text-accent transition duration-300">Home</a></li>
-                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities</a></li>
-                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Gallery</a></li>
+                        <li><a href="activities.html" data-translate="nav" data-key="activities" class="text-gray-300 hover:text-accent transition duration-300">Activities & Tours</a></li>
+                        <li><a href="gallery.html" data-translate="nav" data-key="gallery" class="text-gray-300 hover:text-accent transition duration-300">Blog & Gallery</a></li>
                         <li><a href="contact.html" data-translate="nav" data-key="contact" class="text-gray-300 hover:text-accent transition duration-300">Contact</a></li>
                     </ul>
                 </div>
